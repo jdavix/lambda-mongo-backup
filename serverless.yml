@@ -17,10 +17,9 @@ provider:
 functions:
   backup:
     handler: handler.backup
-    timeout: 300
     environment: ${file(./env.yml):lambda}
     events:
-      - schedule: rate(1 day)
+      - schedule: cron(0 1 * * ? *)
 
 # you can add CloudFormation resource templates here
 resources:
@@ -34,4 +33,3 @@ resources:
       Description: S3 backup bucket arn
       Value:
          "Fn::GetAtt": [ S3BucketBackup, Arn ]
-
